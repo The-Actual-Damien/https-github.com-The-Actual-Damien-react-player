@@ -1,4 +1,4 @@
-import React, { Component, Suspense, lazy } from 'react'
+import React, { Component } from 'react'
 import merge from 'deepmerge'
 import memoize from 'memoize-one'
 import isEqual from 'react-fast-compare'
@@ -6,17 +6,9 @@ import isEqual from 'react-fast-compare'
 import { propTypes, defaultProps } from './props'
 import { omit } from './utils'
 import Player from './Player'
+import Preview from /* webpackChunkName: 'reactPlayerPreview' */'./Preview'
 
-const Preview = lazy(() => import(/* webpackChunkName: 'reactPlayerPreview' */'./Preview'))
-
-const IS_BROWSER = typeof window !== 'undefined' && window.document
-const IS_GLOBAL = global && global.window && global.window.document;
 const SUPPORTED_PROPS = Object.keys(propTypes)
-
-// Return null when rendering on the server
-// as Suspense is not supported yet
-const UniversalSuspense = IS_BROWSER || IS_GLOBAL ? Suspense : () => null
-
 const customPlayers = []
 
 export const createReactPlayer = (players, fallback) => {
@@ -169,11 +161,9 @@ export const createReactPlayer = (players, fallback) => {
       const attributes = this.getAttributes(url)
       return (
         <Wrapper ref={this.references.wrapper} style={{ ...style, width, height }} {...attributes}>
-          <UniversalSuspense fallback={fallback}>
             {showPreview
               ? this.renderPreview(url)
               : this.renderActivePlayer(url)}
-          </UniversalSuspense>
         </Wrapper>
       )
     }
