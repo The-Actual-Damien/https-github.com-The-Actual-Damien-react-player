@@ -6,7 +6,7 @@ import isEqual from 'react-fast-compare'
 import { propTypes, defaultProps } from './props'
 import { omit } from './utils'
 import Player from './Player'
-import Preview from /* webpackChunkName: 'reactPlayerPreview' */'./Preview'
+import Preview from './Preview'
 
 const SUPPORTED_PROPS = Object.keys(propTypes)
 const customPlayers = []
